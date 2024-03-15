@@ -20,7 +20,16 @@ int main()
 	FLAGS_max_log_size = 3;
 	FLAGS_stop_logging_if_full_disk = true;
 	{
-		LOG(INFO) << adb::version();
+		try
+		{
+			LOG(INFO) << adb::version();
+			LOG(WARNING) << adb::devices();
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << "adb::version() Connection failed: " << e.what() << std::endl;
+		}
+		
 		//host_request("host:version");
 	}
 
