@@ -5,29 +5,43 @@
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 #include "client.hpp"
+#include <regex>
 
 int main()
 {
 	google::InitGoogleLogging("AABB");
 
-	FLAGS_v = 1;// no used
-	//FLAGS_logtostdout = false;
-	FLAGS_alsologtostderr = true;
-	//FLAGS_logtostderr = true;
-	FLAGS_stderrthreshold = google::GLOG_WARNING;
+	//FLAGS_v = 1;// no used
+	FLAGS_log_dir = R"(C:\Users\lsp\Downloads\LLOG)";
+	FLAGS_logtostdout = true;
+	//FLAGS_alsologtostderr = false;
+	FLAGS_logtostderr = true;
+	//FLAGS_stderrthreshold = google::GLOG_WARNING;
 	FLAGS_colorlogtostdout = true;
 	FLAGS_colorlogtostderr = true;
-	FLAGS_max_log_size = 3;
+	//FLAGS_max_log_size = 3;
 	FLAGS_stop_logging_if_full_disk = true;
 	{
 		try
 		{
-			LOG(INFO) << adb::version();
-			LOG(WARNING) << adb::devices();
+			//LOG(INFO) << "adb version ->"<< adb::version();
+			//adb::kill_server();
+			//std::string ts = "";
+			//std::regex regex_as(R"(^.+ rst$)");
+			//bool ret = std::regex_match("a     rst", regex_as);
+			//if (ret) puts("true");
+
+			int i = 1;
+			while (i--)
+			{
+				LOG(INFO) << "time = " << i;
+				LOG(WARNING) << "adb devices ->" << adb::devices();
+				LOG(INFO) << "adb version2 ->" << adb::version();
+			}
 		}
 		catch (const std::exception& e)
 		{
-			std::cerr << "adb::version() Connection failed: " << e.what() << std::endl;
+			std::cerr << "adb Connection failed: " << e.what() << std::endl;
 		}
 		
 		//host_request("host:version");
